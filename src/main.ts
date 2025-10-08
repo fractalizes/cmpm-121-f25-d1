@@ -9,6 +9,7 @@ document.body.innerHTML = `
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
 
+// define html elements
 const button = document.getElementById("increment")!;
 const counterElement = document.getElementById("counter")!;
 
