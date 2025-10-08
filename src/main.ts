@@ -21,12 +21,13 @@ function updateCounter() {
   counterElement.innerHTML = counter.toString();
 }
 
+// button listeners
 button.addEventListener("click", () => {
   counter++;
 });
 
 autoButton.addEventListener("click", () => {
-  autoBool = true;
+  autoBool = !autoBool;
 });
 
 // constant updates
