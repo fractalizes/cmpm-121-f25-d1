@@ -3,7 +3,8 @@ import "./style.css";
 
 // variable trackers
 const time: number[] = [];
-const upgrade: number[] = [10, 50, 100];
+const upgradeCost: number[] = [10, 50, 100];
+const upgradeAmount: number[] = [0.5, 1, 1.5];
 let i: number = 0;
 let counter: number = 0;
 let timePassed: number = 0;
@@ -26,14 +27,16 @@ function update() {
   autoCounter();
 
   counterElement.innerHTML = counter.toFixed(2);
-  autoButton.innerHTML = "💥 - " + (i < upgrade.length ? upgrade[i] : "MAX");
+  autoButton.innerHTML = "💥 - " +
+    (i < upgradeCost.length ? upgradeCost[i] : "MAX");
 
   requestAnimationFrame(update);
 }
 
 function autoCounter() {
   if (autoBool) {
-    counter = counter + timePassed;
+    counter = counter +
+      timePassed * upgradeAmount[i < upgradeCost.length ? i : i - 1];
   }
 }
 
@@ -54,12 +57,13 @@ button.addEventListener("click", () => {
 });
 
 autoButton.addEventListener("click", () => {
-  if (!autoBool) {
-    autoBool = true;
-  }
-  if (counter > upgrade[i] && i < upgrade.length) {
-    counter = counter - upgrade[i];
+  if (counter >= upgradeCost[i] && i < upgradeCost.length) {
+    counter = counter - upgradeCost[i];
     i++;
+
+    if (!autoBool) {
+      autoBool = true;
+    }
   }
 });
 
