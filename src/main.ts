@@ -3,8 +3,8 @@ import "./style.css";
 
 // variable trackers
 const time: number[] = [];
-const upgradeCost: number[] = [10, 50, 100];
-const upgradeAmount: number[] = [0.5, 1, 1.5];
+const upgradeCost: number[] = [10, 100, 1000];
+const upgradeAmount: number[] = [0.1, 2, 50];
 let i: number = 0;
 let counter: number = 0;
 let timePassed: number = 0;
@@ -27,8 +27,11 @@ function update() {
   autoCounter();
 
   counterElement.innerHTML = counter.toFixed(2);
-  autoButton.innerHTML = "💥 - " +
-    (i < upgradeCost.length ? upgradeCost[i] : "MAX");
+  autoButton.innerHTML = "💥 [ $" +
+    (i < upgradeCost.length ? upgradeCost[i] : "MAX") +
+    " - $" +
+    (i < upgradeCost.length ? upgradeAmount[i] : upgradeAmount[i - 1]) +
+    "/sec]";
   autoButton.disabled = (counter < upgradeCost[i] || i == upgradeCost.length)
     ? true
     : false;
