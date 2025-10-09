@@ -3,6 +3,8 @@ import "./style.css";
 
 // variable trackers
 const time: number[] = [];
+const upgrade: number[] = [10, 50, 100];
+let i: number = 0;
 let counter: number = 0;
 let timePassed: number = 0;
 let autoBool: boolean = false;
@@ -19,11 +21,14 @@ const button = document.getElementById("increment")!;
 const autoButton = document.getElementById("autoclick")!;
 const counterElement = document.getElementById("counter")!;
 
-function updateCounter() {
+function update() {
   calculateTime();
   autoCounter();
+
   counterElement.innerHTML = counter.toFixed(2);
-  requestAnimationFrame(updateCounter);
+  autoButton.innerHTML = "💥 - " + (i < upgrade.length ? upgrade[i] : "MAX");
+
+  requestAnimationFrame(update);
 }
 
 function autoCounter() {
@@ -49,9 +54,15 @@ button.addEventListener("click", () => {
 });
 
 autoButton.addEventListener("click", () => {
-  autoBool = !autoBool;
+  if (!autoBool) {
+    autoBool = true;
+  }
+  if (counter > upgrade[i] && i < upgrade.length) {
+    counter = counter - upgrade[i];
+    i++;
+  }
 });
 
 // constant updates
-updateCounter();
+update();
 autoCounter();
