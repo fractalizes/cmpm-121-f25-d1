@@ -12,6 +12,7 @@ let autoBool: boolean = false;
 
 document.body.innerHTML = `
   <p>Clicks: <span id="counter">0</span></p>
+  <p>You are currently making $<span id="rate">0</span>/sec.</p>
   <button id="increment">🤯</button>
   <button id="autoclick">💥</button>
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
@@ -21,12 +22,14 @@ document.body.innerHTML = `
 const button = document.getElementById("increment")!;
 const autoButton = document.getElementById("autoclick")! as HTMLButtonElement;
 const counterElement = document.getElementById("counter")!;
+const rateElement = document.getElementById("rate")!;
 
 function update() {
   calculateTime();
   autoCounter();
 
   counterElement.innerHTML = counter.toFixed(2);
+  rateElement.innerHTML = i == 0 ? "0" : upgradeAmount[i - 1].toString();
   autoButton.innerHTML = "💥 [ $" +
     (i < upgradeCost.length ? upgradeCost[i] : "MAX") +
     " - $" +
