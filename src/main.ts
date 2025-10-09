@@ -31,10 +31,9 @@ function update() {
   counterElement.innerHTML = counter.toFixed(2);
   rateElement.innerHTML = i == 0 ? "0" : upgradeAmount[i - 1].toString();
   autoButton.innerHTML = "💥 [ $" +
-    (i < upgradeCost.length ? upgradeCost[i] : "MAX") +
-    " - $" +
-    (i < upgradeCost.length ? upgradeAmount[i] : upgradeAmount[i - 1]) +
-    "/sec]";
+    (i < upgradeCost.length
+      ? (upgradeCost[i] + " - $" + upgradeAmount[i] + "/sec ]")
+      : "MAXED OUT ]");
   autoButton.disabled = (counter < upgradeCost[i] || i == upgradeCost.length)
     ? true
     : false;
