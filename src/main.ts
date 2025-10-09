@@ -36,7 +36,10 @@ function autoCounter() {
 function calculateTime() {
   time.unshift(performance.now());
   if (time.length > 10) {
-    timePassed = (performance.now() - time.pop()) / 10000;
+    const prev = time.pop();
+    if (prev !== undefined) {
+      timePassed = (performance.now() - prev) / 10000;
+    }
   }
 }
 
