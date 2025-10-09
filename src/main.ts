@@ -19,7 +19,7 @@ document.body.innerHTML = `
 
 // define html elements
 const button = document.getElementById("increment")!;
-const autoButton = document.getElementById("autoclick")!;
+const autoButton = document.getElementById("autoclick")! as HTMLButtonElement;
 const counterElement = document.getElementById("counter")!;
 
 function update() {
@@ -29,6 +29,9 @@ function update() {
   counterElement.innerHTML = counter.toFixed(2);
   autoButton.innerHTML = "💥 - " +
     (i < upgradeCost.length ? upgradeCost[i] : "MAX");
+  autoButton.disabled = (counter < upgradeCost[i] || i == upgradeCost.length)
+    ? true
+    : false;
 
   requestAnimationFrame(update);
 }
