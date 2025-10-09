@@ -1,8 +1,10 @@
 import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
-// tracks clicks
+// variable trackers
+const time: number[] = [];
 let counter: number = 0;
+let timePassed: number = 0;
 let autoBool: boolean = false;
 
 document.body.innerHTML = `
@@ -18,7 +20,24 @@ const autoButton = document.getElementById("autoclick")!;
 const counterElement = document.getElementById("counter")!;
 
 function updateCounter() {
-  counterElement.innerHTML = counter.toString();
+  calculateTime();
+  autoCounter();
+  counterElement.innerHTML = counter.toFixed(2);
+  requestAnimationFrame(updateCounter);
+}
+
+function autoCounter() {
+  if (autoBool) {
+    counter = counter + timePassed;
+  }
+}
+
+// measures time in seconds, not milliseconds
+function calculateTime() {
+  time.unshift(performance.now());
+  if (time.length > 10) {
+    timePassed = (performance.now() - time.pop()) / 10000;
+  }
 }
 
 // button listeners
@@ -31,9 +50,5 @@ autoButton.addEventListener("click", () => {
 });
 
 // constant updates
-setInterval(updateCounter, 10);
-setInterval(function () {
-  if (autoBool) {
-    counter = counter + 1;
-  }
-}, 1000);
+updateCounter();
+autoCounter();
