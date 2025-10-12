@@ -1,4 +1,4 @@
-import fishingRod from "./noun-paperclip-7598668-00449F.png";
+import fishingRod from "./fishing_rod.png";
 import "./style.css";
 
 interface Upgrade {
@@ -12,8 +12,8 @@ interface Upgrade {
 document.body.innerHTML = `
   <p>Clicks: <span id="counter">0</span></p>
   <p>You are currently making $<span id="rate">0</span>/sec.</p>
-  <button id="increment">
-    <img src="${fishingRod}" class="icon">
+  <button id="increment" class="clicker">
+    <img src="${fishingRod}">
   </button>
   <button id="autoclick">💥</button>
 `;
@@ -46,6 +46,11 @@ const upgradeC: Upgrade = {
 let counter: number = 0;
 let timePassed: number = 0;
 
+let buttonTimer: number = 0;
+let buttonCooldown: number = 500;
+let buttonSize: number = 1;
+let buttonVector: number = 0.0025;
+
 // define html elements
 const button = document.getElementById("increment")!;
 const counterElement = document.getElementById("counter")!;
@@ -53,6 +58,7 @@ const counterElement = document.getElementById("counter")!;
 function update() {
   calculateTime();
   autoCounter();
+  animateButton();
 
   counterElement.innerHTML = counter.toFixed(2);
   /*
@@ -72,7 +78,7 @@ function update() {
 
 function autoCounter() {
   if (upgradeA.purchased) {
-    counter = counter + timePassed * upgradeA.rate;
+    counter = counter + (timePassed / 10000) * upgradeA.rate;
   }
 }
 
@@ -82,9 +88,22 @@ function calculateTime() {
   if (time.length > 10) {
     const prev = time.pop();
     if (prev !== undefined) {
-      timePassed = (performance.now() - prev) / 10000;
+      timePassed = performance.now() - prev;
     }
   }
+}
+
+function animateButton() {
+  if (buttonTimer >= buttonCooldown) {
+    if (buttonSize > 1 || buttonSize < 0.925) {
+      buttonVector = -buttonVector;
+    }
+    buttonSize = buttonSize + buttonVector;
+    button.style.transform = "scale(" + buttonSize.toString() + ")";
+    buttonTimer = 0;
+  }
+  buttonTimer += timePassed;
+  console.log(buttonTimer);
 }
 
 // button listeners
@@ -101,4 +120,3 @@ upgradeA.button.addEventListener("click", () => {
 
 // constant updates
 update();
-autoCounter();
