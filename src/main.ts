@@ -28,6 +28,7 @@ const upgradeA: Upgrade = {
   cost: 10,
   rate: 0.1,
 };
+/*
 const upgradeB: Upgrade = {
   text: "Fish Bait",
   purchased: false,
@@ -40,6 +41,7 @@ const upgradeC: Upgrade = {
   cost: 1000,
   rate: 50,
 };
+*/
 
 let counter: number = 0;
 let timePassed: number = 0;
