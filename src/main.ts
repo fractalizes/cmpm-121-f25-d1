@@ -1,34 +1,59 @@
-import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
+import fishingRod from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
-// variable trackers
-const time: number[] = [];
-const upgradeCost: number[] = [10, 100, 1000];
-const upgradeAmount: number[] = [0.1, 2, 50];
-let i: number = 0;
-let counter: number = 0;
-let timePassed: number = 0;
-let autoBool: boolean = false;
+interface Upgrade {
+  text: string;
+  button: HTMLButtonElement;
+  purchased: boolean;
+  cost: number;
+  rate: number;
+}
 
 document.body.innerHTML = `
   <p>Clicks: <span id="counter">0</span></p>
   <p>You are currently making $<span id="rate">0</span>/sec.</p>
-  <button id="increment">🤯</button>
+  <button id="increment">
+    <img src="${fishingRod}" class="icon">
+  </button>
   <button id="autoclick">💥</button>
-  <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
+document.body.style.backgroundColor = "#6eadff";
+
+// variable trackers
+const time: number[] = [];
+const upgradeA: Upgrade = {
+  text: "Super Rod",
+  button: document.getElementById("autoclick")! as HTMLButtonElement,
+  purchased: false,
+  cost: 10,
+  rate: 0.1,
+};
+const upgradeB: Upgrade = {
+  text: "Fish Bait",
+  purchased: false,
+  cost: 100,
+  rate: 2,
+};
+const upgradeC: Upgrade = {
+  text: "Fishing Net",
+  purchased: false,
+  cost: 1000,
+  rate: 50,
+};
+
+let counter: number = 0;
+let timePassed: number = 0;
 
 // define html elements
 const button = document.getElementById("increment")!;
-const autoButton = document.getElementById("autoclick")! as HTMLButtonElement;
 const counterElement = document.getElementById("counter")!;
-const rateElement = document.getElementById("rate")!;
 
 function update() {
   calculateTime();
   autoCounter();
 
   counterElement.innerHTML = counter.toFixed(2);
+  /*
   rateElement.innerHTML = i == 0 ? "0" : upgradeAmount[i - 1].toString();
   autoButton.innerHTML = "💥 [ $" +
     (i < upgradeCost.length
@@ -37,14 +62,15 @@ function update() {
   autoButton.disabled = (counter < upgradeCost[i] || i == upgradeCost.length)
     ? true
     : false;
+  */
 
+  // recursion to continue update going
   requestAnimationFrame(update);
 }
 
 function autoCounter() {
-  if (autoBool) {
-    counter = counter +
-      timePassed * upgradeAmount[i < upgradeCost.length ? i : i - 1];
+  if (upgradeA.purchased) {
+    counter = counter + timePassed * upgradeA.rate;
   }
 }
 
@@ -64,14 +90,10 @@ button.addEventListener("click", () => {
   counter++;
 });
 
-autoButton.addEventListener("click", () => {
-  if (counter >= upgradeCost[i] && i < upgradeCost.length) {
-    counter = counter - upgradeCost[i];
-    i++;
-
-    if (!autoBool) {
-      autoBool = true;
-    }
+upgradeA.button.addEventListener("click", () => {
+  if (counter >= upgradeA.cost) {
+    if (!upgradeA.purchased) upgradeA.purchased = true;
+    counter = counter - upgradeA.cost;
   }
 });
 
