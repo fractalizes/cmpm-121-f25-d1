@@ -46,8 +46,9 @@ const upgradeC: Upgrade = {
 let counter: number = 0;
 let timePassed: number = 0;
 
+// button animation variables
 let buttonTimer: number = 0;
-let buttonCooldown: number = 500;
+const buttonCooldown: number = 500;
 let buttonSize: number = 1;
 let buttonVector: number = 0.0025;
 
@@ -78,7 +79,7 @@ function update() {
 
 function autoCounter() {
   if (upgradeA.purchased) {
-    counter = counter + (timePassed / 10000) * upgradeA.rate;
+    counter += (timePassed / 10000) * upgradeA.rate;
   }
 }
 
@@ -114,9 +115,9 @@ button.addEventListener("click", () => {
 upgradeA.button.addEventListener("click", () => {
   if (counter >= upgradeA.cost) {
     if (!upgradeA.purchased) upgradeA.purchased = true;
-    counter = counter - upgradeA.cost;
+    counter -= upgradeA.cost;
   }
 });
 
-// constant updates
+// game loop
 update();
