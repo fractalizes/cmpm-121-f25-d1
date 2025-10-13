@@ -14,25 +14,28 @@ interface Upgrade {
 
 document.body.innerHTML = `
   <div class="upgrade-display">
-    <p style="grid-area: box-1">
-      Total: $<span id="counter">0</span><br>$<span id="rate">0</span>/sec
+    <h1 style="grid-area: box-1">
+      🐟 GONE FISHING! 🐟
+    </h1>
+    <p style="grid-area: box-2">
+      Total: $<span id="counter">0</span> ($<span id="rate">0</span>/sec)
     </p>
-    <button id="increment" class="clicker" style="grid-area: box-2">
+    <button id="increment" class="clicker" style="grid-area: box-3">
       <img src="${fishingRod}">
     </button>
-    <button id="rod-upgrade" class="upgrade" style="grid-area: box-3">
+    <button id="rod-upgrade" class="upgrade" style="grid-area: box-4">
       🎣
     </button>
-    <button id="bait-upgrade" class="upgrade" style="grid-area: box-4">
+    <button id="bait-upgrade" class="upgrade" style="grid-area: box-5">
       🪱
     </button>
-    <button id="net-upgrade" class="upgrade" style="grid-area: box-5">
+    <button id="net-upgrade" class="upgrade" style="grid-area: box-6">
       🕸️
     </button>
-    <button id="fran-upgrade" class="upgrade" style="grid-area: box-6">
+    <button id="fran-upgrade" class="upgrade" style="grid-area: box-7">
       🧍
     </button>
-    <button id="ship-upgrade" class="upgrade" style="grid-area: box-7">
+    <button id="ship-upgrade" class="upgrade" style="grid-area: box-8">
       ⚓
     </button>
   </div>
@@ -78,7 +81,7 @@ const upgradeD: Upgrade = {
   purchased: false,
   quantity: 0,
   cost: 1000,
-  rate: 50,
+  rate: 100,
 };
 const upgradeE: Upgrade = {
   icon: "⚓",
@@ -88,7 +91,7 @@ const upgradeE: Upgrade = {
   purchased: false,
   quantity: 0,
   cost: 10000,
-  rate: 50,
+  rate: 500,
 };
 
 // variable trackers
