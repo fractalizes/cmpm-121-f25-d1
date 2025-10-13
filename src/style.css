@@ -33,6 +33,7 @@ h2 {
   padding: 1rem;
   color: #ffffff;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .upgrade-display > .clicker {
