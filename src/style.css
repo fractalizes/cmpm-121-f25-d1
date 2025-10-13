@@ -1,12 +1,25 @@
-.upgrade-display {
-  display: inline-grid;
-  grid-template-columns: repeat(auto-fill, minmax(1000px, 1fr));
-  gap: 0.25rem;
-  margin-top: 1rem;
+p {
+  font-size: 80px;
+  text-align: center;
+  color: #ffffff;
+  filter: drop-shadow(10px 10px 5px #223651);
 }
 
-.upgrade-display > button {
-  background: none;
+.upgrade-display {
+  gap: 0.5rem;
+  min-height: 800px;
+  min-width: 1000px;
+  display: grid;
+  grid-auto-rows: 200px;
+  grid-template-areas:
+    "box-1 box-1 box-1 box-3 box-3 box-3 box-3"
+    "box-1 box-1 box-1 box-4 box-4 box-4 box-4"
+    "box-2 box-2 box-2 box-5 box-5 box-5 box-5"
+    "box-2 box-2 box-2 box-6 box-6 box-6 box-6"
+    "box-2 box-2 box-2 box-7 box-7 box-7 box-7";
+}
+
+.upgrade-display > .upgrade {
   border: 1px solid #a7dfff;
   border-width: 3px;
   border-radius: 6px;
@@ -15,13 +28,13 @@
   font-size: 40px;
 }
 
-.clicker {
+.upgrade-display > .clicker {
   background: none;
   vertical-align: top;
   border: none;
   outline: none;
   cursor: pointer;
-  filter: drop-shadow(15px 10px 5px rgb(34, 54, 81));
+  filter: drop-shadow(15px 10px 5px #223651);
 }
 
 .icon {

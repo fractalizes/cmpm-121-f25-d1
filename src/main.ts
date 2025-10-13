@@ -1,9 +1,10 @@
-import fishingRod from "./fishing_rod.png";
+import fishingRod from "./fishing_rod.png"; // fishing rod asset from Google Noto Color Emoji
 import "./style.css";
 
 interface Upgrade {
-  text: string;
   icon: string;
+  text: string;
+  flavor: string;
   button: HTMLButtonElement;
   purchased: boolean;
   quantity: number;
@@ -12,20 +13,27 @@ interface Upgrade {
 }
 
 document.body.innerHTML = `
-  <p>Clicks: <span id="counter">0</span></p>
-  <p>You are currently making $<span id="rate">0</span>/sec.</p>
-  <button id="increment" td class="clicker">
-    <img src="${fishingRod}">
-  </button>
   <div class="upgrade-display">
-    <button id="rod-upgrade" td class="upgrade">
+    <p style="grid-area: box-1">
+      Total: $<span id="counter">0</span><br>$<span id="rate">0</span>/sec
+    </p>
+    <button id="increment" class="clicker" style="grid-area: box-2">
+      <img src="${fishingRod}">
+    </button>
+    <button id="rod-upgrade" class="upgrade" style="grid-area: box-3">
       🎣
     </button>
-    <button id="bait-upgrade" td class="upgrade">
+    <button id="bait-upgrade" class="upgrade" style="grid-area: box-4">
       🪱
     </button>
-    <button id="net-upgrade" td class="upgrade">
+    <button id="net-upgrade" class="upgrade" style="grid-area: box-5">
       🕸️
+    </button>
+    <button id="fran-upgrade" class="upgrade" style="grid-area: box-6">
+      🧍
+    </button>
+    <button id="ship-upgrade" class="upgrade" style="grid-area: box-7">
+      ⚓
     </button>
   </div>
 `;
@@ -33,8 +41,9 @@ document.body.style.backgroundColor = "#0256a6";
 
 // upgrades
 const upgradeA: Upgrade = {
-  text: "Super Rod",
   icon: "🎣",
+  text: "Super Rod",
+  flavor: "",
   button: document.getElementById("rod-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
@@ -42,8 +51,9 @@ const upgradeA: Upgrade = {
   rate: 0.1,
 };
 const upgradeB: Upgrade = {
-  text: "Fish Bait",
   icon: "🪱",
+  text: "Fish Bait",
+  flavor: "",
   button: document.getElementById("bait-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
@@ -51,12 +61,33 @@ const upgradeB: Upgrade = {
   rate: 2,
 };
 const upgradeC: Upgrade = {
-  text: "Fishing Net",
   icon: "🕸️",
+  text: "Fishing Net",
+  flavor: "",
   button: document.getElementById("net-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
   cost: 1000,
+  rate: 50,
+};
+const upgradeD: Upgrade = {
+  icon: "🧍",
+  text: "Fisherman Fran",
+  flavor: "",
+  button: document.getElementById("fran-upgrade")! as HTMLButtonElement,
+  purchased: false,
+  quantity: 0,
+  cost: 1000,
+  rate: 50,
+};
+const upgradeE: Upgrade = {
+  icon: "⚓",
+  text: "Better Ship",
+  flavor: "",
+  button: document.getElementById("ship-upgrade")! as HTMLButtonElement,
+  purchased: false,
+  quantity: 0,
+  cost: 10000,
   rate: 50,
 };
 
@@ -65,6 +96,8 @@ const upgrades: Upgrade[] = [
   upgradeA,
   upgradeB,
   upgradeC,
+  upgradeD,
+  upgradeE,
 ];
 const time: number[] = [];
 let timePassed: number = 0;
@@ -72,9 +105,11 @@ let counter: number = 0;
 let rate: number = 0;
 
 // button animation variables
-let buttonTimer: number = 0;
+const buttonMin: number = 1;
+const buttonMax: number = 1.25;
 const buttonCooldown: number = 500;
-let buttonSize: number = 1;
+let buttonTimer: number = 0;
+let buttonSize: number = buttonMin;
 let buttonVector: number = 0.0025;
 
 // define html elements
@@ -112,7 +147,7 @@ function calculateTime() {
 
 function animateClicker() {
   if (buttonTimer >= buttonCooldown) {
-    if (buttonSize > 1 || buttonSize < 0.925) {
+    if (buttonSize > buttonMax || buttonSize < buttonMin) {
       buttonVector = -buttonVector;
     }
     buttonSize = buttonSize + buttonVector;
