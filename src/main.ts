@@ -93,8 +93,10 @@ function update() {
 }
 
 function autoCounter() {
-  counter += (upgradeA.purchased ? (timePassed / 10000) * upgradeA.rate : 0) +
-    (upgradeB.purchased ? (timePassed / 10000) * upgradeB.rate : 0);
+  rate = (upgradeA.purchased ? upgradeA.rate : 0) +
+    (upgradeB.purchased ? upgradeB.rate : 0) +
+    (upgradeC.purchased ? upgradeB.rate : 0);
+  counter += rate * timePassed / 10000;
 }
 
 // measures time in seconds, not milliseconds
@@ -143,34 +145,31 @@ button.addEventListener("click", () => {
 
 upgradeA.button.addEventListener("click", () => {
   if (counter >= upgradeA.cost) {
-    counter -= upgradeA.cost;
-    rate += upgradeA.rate;
-    upgradeA.cost *= 1.15;
-    upgradeA.quantity++;
     if (!upgradeA.purchased) upgradeA.purchased = true;
     else upgradeA.rate += upgradeA.rate;
+    counter -= upgradeA.cost;
+    upgradeA.cost *= 1.1;
+    upgradeA.quantity++;
   }
 });
 
 upgradeB.button.addEventListener("click", () => {
   if (counter >= upgradeB.cost) {
-    counter -= upgradeB.cost;
-    rate += upgradeB.rate;
-    upgradeB.cost *= 1.15;
-    upgradeB.quantity++;
     if (!upgradeB.purchased) upgradeB.purchased = true;
     else upgradeB.rate += upgradeB.rate;
+    counter -= upgradeB.cost;
+    upgradeB.cost *= 1.25;
+    upgradeB.quantity++;
   }
 });
 
 upgradeC.button.addEventListener("click", () => {
   if (counter >= upgradeC.cost) {
-    counter -= upgradeC.cost;
-    rate += upgradeC.rate;
-    upgradeC.cost *= 1.15;
-    upgradeC.quantity++;
     if (!upgradeC.purchased) upgradeC.purchased = true;
     else upgradeC.rate += upgradeC.rate;
+    counter -= upgradeC.cost;
+    upgradeC.cost *= 1.5;
+    upgradeC.quantity++;
   }
 });
 
