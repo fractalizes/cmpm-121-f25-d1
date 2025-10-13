@@ -1,14 +1,31 @@
+.upgrade-display {
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, minmax(1000px, 1fr));
+  gap: 0.25rem;
+  margin-top: 1rem;
+}
+
+.upgrade-display > button {
+  background: none;
+  border: 1px solid #427bf5;
+  border-width: 3px;
+  border-radius: 6px;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+.clicker {
+  background: none;
+  vertical-align: top;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  filter: drop-shadow(15px 10px 5px #427bf5);
+}
+
 .icon {
   width: 64px;
   vertical-align: top;
   border: 1px solid salmon;
-}
-
-.clicker {
-  background-color: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  filter: drop-shadow(15px 10px 5px #427bf5);
 }

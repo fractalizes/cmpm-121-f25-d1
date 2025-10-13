@@ -12,39 +12,50 @@ interface Upgrade {
 document.body.innerHTML = `
   <p>Clicks: <span id="counter">0</span></p>
   <p>You are currently making $<span id="rate">0</span>/sec.</p>
-  <button id="increment" class="clicker">
+  <button id="increment" td class="clicker">
     <img src="${fishingRod}">
   </button>
-  <button id="autoclick">💥</button>
+  <div class="upgrade-display">
+    <button id="rod-upgrade" td class="upgrade">
+      🎣
+    </button>
+    <button id="bait-upgrade" td class="upgrade">
+      🪱
+    </button>
+    <button id="net-upgrade" td class="upgrade">
+      🕸️
+    </button>
+  </div>
 `;
 document.body.style.backgroundColor = "#6eadff";
 
-// variable trackers
-const time: number[] = [];
+// upgrades
 const upgradeA: Upgrade = {
   text: "Super Rod",
-  button: document.getElementById("autoclick")! as HTMLButtonElement,
+  button: document.getElementById("rod-upgrade")! as HTMLButtonElement,
   purchased: false,
   cost: 10,
   rate: 0.1,
 };
-/*
 const upgradeB: Upgrade = {
   text: "Fish Bait",
+  button: document.getElementById("bait-upgrade")! as HTMLButtonElement,
   purchased: false,
   cost: 100,
   rate: 2,
 };
 const upgradeC: Upgrade = {
   text: "Fishing Net",
+  button: document.getElementById("net-upgrade")! as HTMLButtonElement,
   purchased: false,
   cost: 1000,
   rate: 50,
 };
-*/
 
-let counter: number = 0;
+// variable trackers
+const time: number[] = [];
 let timePassed: number = 0;
+let counter: number = 0;
 
 // button animation variables
 let buttonTimer: number = 0;
@@ -59,9 +70,9 @@ const counterElement = document.getElementById("counter")!;
 function update() {
   calculateTime();
   autoCounter();
-  animateButton();
+  animateClicker();
+  updateButtons();
 
-  counterElement.innerHTML = counter.toFixed(2);
   /*
   rateElement.innerHTML = i == 0 ? "0" : upgradeAmount[i - 1].toString();
   autoButton.innerHTML = "💥 [ $" +
@@ -78,9 +89,8 @@ function update() {
 }
 
 function autoCounter() {
-  if (upgradeA.purchased) {
-    counter += (timePassed / 10000) * upgradeA.rate;
-  }
+  counter += (upgradeA.purchased ? (timePassed / 10000) * upgradeA.rate : 0) +
+    (upgradeB.purchased ? (timePassed / 10000) * upgradeB.rate : 0);
 }
 
 // measures time in seconds, not milliseconds
@@ -94,7 +104,7 @@ function calculateTime() {
   }
 }
 
-function animateButton() {
+function animateClicker() {
   if (buttonTimer >= buttonCooldown) {
     if (buttonSize > 1 || buttonSize < 0.925) {
       buttonVector = -buttonVector;
@@ -104,7 +114,10 @@ function animateButton() {
     buttonTimer = 0;
   }
   buttonTimer += timePassed;
-  console.log(buttonTimer);
+}
+
+function updateButtons() {
+  counterElement.innerHTML = counter.toFixed(2);
 }
 
 // button listeners
@@ -115,7 +128,27 @@ button.addEventListener("click", () => {
 upgradeA.button.addEventListener("click", () => {
   if (counter >= upgradeA.cost) {
     if (!upgradeA.purchased) upgradeA.purchased = true;
+    else upgradeA.rate += upgradeA.rate;
     counter -= upgradeA.cost;
+    upgradeA.cost *= 1.15;
+  }
+});
+
+upgradeB.button.addEventListener("click", () => {
+  if (counter >= upgradeB.cost) {
+    if (!upgradeB.purchased) upgradeB.purchased = true;
+    else upgradeB.rate += upgradeB.rate;
+    counter -= upgradeB.cost;
+    upgradeB.cost *= 1.15;
+  }
+});
+
+upgradeC.button.addEventListener("click", () => {
+  if (counter >= upgradeB.cost) {
+    if (!upgradeC.purchased) upgradeB.purchased = true;
+    else upgradeC.rate += upgradeB.rate;
+    counter -= upgradeC.cost;
+    upgradeC.cost *= 1.15;
   }
 });
 
