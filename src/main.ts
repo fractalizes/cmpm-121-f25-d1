@@ -143,34 +143,34 @@ button.addEventListener("click", () => {
 
 upgradeA.button.addEventListener("click", () => {
   if (counter >= upgradeA.cost) {
-    if (!upgradeA.purchased) upgradeA.purchased = true;
-    else upgradeA.rate += upgradeA.rate;
     counter -= upgradeA.cost;
     rate += upgradeA.rate;
     upgradeA.cost *= 1.15;
     upgradeA.quantity++;
+    if (!upgradeA.purchased) upgradeA.purchased = true;
+    else upgradeA.rate += upgradeA.rate;
   }
 });
 
 upgradeB.button.addEventListener("click", () => {
   if (counter >= upgradeB.cost) {
-    if (!upgradeB.purchased) upgradeB.purchased = true;
-    else upgradeB.rate += upgradeB.rate;
     counter -= upgradeB.cost;
     rate += upgradeB.rate;
     upgradeB.cost *= 1.15;
     upgradeB.quantity++;
+    if (!upgradeB.purchased) upgradeB.purchased = true;
+    else upgradeB.rate += upgradeB.rate;
   }
 });
 
 upgradeC.button.addEventListener("click", () => {
   if (counter >= upgradeC.cost) {
-    if (!upgradeC.purchased) upgradeC.purchased = true;
-    else upgradeC.rate += upgradeC.rate;
     counter -= upgradeC.cost;
     rate += upgradeC.rate;
     upgradeC.cost *= 1.15;
     upgradeC.quantity++;
+    if (!upgradeC.purchased) upgradeC.purchased = true;
+    else upgradeC.rate += upgradeC.rate;
   }
 });
 
