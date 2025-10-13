@@ -7,11 +7,11 @@
 
 .upgrade-display > button {
   background: none;
-  border: 1px solid #427bf5;
+  border: 1px solid #a7dfff;
   border-width: 3px;
   border-radius: 6px;
   padding: 1rem;
-  cursor: pointer;
+  color: #ffffff;
   font-size: 40px;
 }
 
@@ -21,7 +21,7 @@
   border: none;
   outline: none;
   cursor: pointer;
-  filter: drop-shadow(15px 10px 5px #427bf5);
+  filter: drop-shadow(15px 10px 5px rgb(34, 54, 81));
 }
 
 .icon {

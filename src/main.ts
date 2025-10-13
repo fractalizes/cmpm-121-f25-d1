@@ -3,8 +3,10 @@ import "./style.css";
 
 interface Upgrade {
   text: string;
+  icon: string;
   button: HTMLButtonElement;
   purchased: boolean;
+  quantity: number;
   cost: number;
   rate: number;
 }
@@ -27,35 +29,47 @@ document.body.innerHTML = `
     </button>
   </div>
 `;
-document.body.style.backgroundColor = "#6eadff";
+document.body.style.backgroundColor = "#0256a6";
 
 // upgrades
 const upgradeA: Upgrade = {
   text: "Super Rod",
+  icon: "🎣",
   button: document.getElementById("rod-upgrade")! as HTMLButtonElement,
   purchased: false,
+  quantity: 0,
   cost: 10,
   rate: 0.1,
 };
 const upgradeB: Upgrade = {
   text: "Fish Bait",
+  icon: "🪱",
   button: document.getElementById("bait-upgrade")! as HTMLButtonElement,
   purchased: false,
+  quantity: 0,
   cost: 100,
   rate: 2,
 };
 const upgradeC: Upgrade = {
   text: "Fishing Net",
+  icon: "🕸️",
   button: document.getElementById("net-upgrade")! as HTMLButtonElement,
   purchased: false,
+  quantity: 0,
   cost: 1000,
   rate: 50,
 };
 
 // variable trackers
+const upgrades: Upgrade[] = [
+  upgradeA,
+  upgradeB,
+  upgradeC,
+];
 const time: number[] = [];
 let timePassed: number = 0;
 let counter: number = 0;
+let rate: number = 0;
 
 // button animation variables
 let buttonTimer: number = 0;
@@ -66,23 +80,13 @@ let buttonVector: number = 0.0025;
 // define html elements
 const button = document.getElementById("increment")!;
 const counterElement = document.getElementById("counter")!;
+const rateElement = document.getElementById("rate")!;
 
 function update() {
   calculateTime();
   autoCounter();
   animateClicker();
-  updateButtons();
-
-  /*
-  rateElement.innerHTML = i == 0 ? "0" : upgradeAmount[i - 1].toString();
-  autoButton.innerHTML = "💥 [ $" +
-    (i < upgradeCost.length
-      ? (upgradeCost[i] + " - $" + upgradeAmount[i] + "/sec ]")
-      : "MAXED OUT ]");
-  autoButton.disabled = (counter < upgradeCost[i] || i == upgradeCost.length)
-    ? true
-    : false;
-  */
+  updateAssets();
 
   // recursion to continue update going
   requestAnimationFrame(update);
@@ -116,9 +120,21 @@ function animateClicker() {
   buttonTimer += timePassed;
 }
 
-function updateButtons() {
+function updateAssets() {
+  upgrades.forEach((upgrade) => {
+    upgrade.button.style.background = counter >= upgrade.cost
+      ? "#ffffff9e"
+      : "#ffffff42";
+    upgrade.button.innerHTML = upgrade.icon + upgrade.text + " x" +
+      upgrade.quantity + "<br>[ $" + upgrade.cost.toFixed(2) + " ~ $" +
+      upgrade.rate.toFixed(2) + "/sec ]";
+  });
+
   counterElement.innerHTML = counter.toFixed(2);
+  rateElement.innerHTML = rate.toFixed(2);
 }
+
+// #6eadff, #427bf5
 
 // button listeners
 button.addEventListener("click", () => {
@@ -130,7 +146,9 @@ upgradeA.button.addEventListener("click", () => {
     if (!upgradeA.purchased) upgradeA.purchased = true;
     else upgradeA.rate += upgradeA.rate;
     counter -= upgradeA.cost;
+    rate += upgradeA.rate;
     upgradeA.cost *= 1.15;
+    upgradeA.quantity++;
   }
 });
 
@@ -139,16 +157,20 @@ upgradeB.button.addEventListener("click", () => {
     if (!upgradeB.purchased) upgradeB.purchased = true;
     else upgradeB.rate += upgradeB.rate;
     counter -= upgradeB.cost;
+    rate += upgradeB.rate;
     upgradeB.cost *= 1.15;
+    upgradeB.quantity++;
   }
 });
 
 upgradeC.button.addEventListener("click", () => {
-  if (counter >= upgradeB.cost) {
-    if (!upgradeC.purchased) upgradeB.purchased = true;
-    else upgradeC.rate += upgradeB.rate;
+  if (counter >= upgradeC.cost) {
+    if (!upgradeC.purchased) upgradeC.purchased = true;
+    else upgradeC.rate += upgradeC.rate;
     counter -= upgradeC.cost;
+    rate += upgradeC.rate;
     upgradeC.cost *= 1.15;
+    upgradeC.quantity++;
   }
 });
 
