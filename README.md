@@ -1,3 +1,3 @@
 # CMPM 121 D1 Project
 
-This is the starting point for your CMPM 121 D1 project. The goal of this project is to create a simple web application using TypeScript, Vite, and modern web development practices. Students should make sure to remove _this_ content from their README.md file and replace it with their own project documentation.
+This is my D1 Project for the class CMPM 121 at UC Santa Cruz. In this game, you can click the fishing rod to collect fish and buy upgrades to earn yourself more fish yield. Knock yourself out!
