@@ -93,9 +93,9 @@ function update() {
 }
 
 function autoCounter() {
-  rate = (upgradeA.purchased ? upgradeA.rate : 0) +
+  /*rate = (upgradeA.purchased ? upgradeA.rate : 0) +
     (upgradeB.purchased ? upgradeB.rate : 0) +
-    (upgradeC.purchased ? upgradeB.rate : 0);
+    (upgradeC.purchased ? upgradeB.rate : 0);*/
   counter += rate * timePassed / 10000;
 }
 
@@ -143,34 +143,21 @@ button.addEventListener("click", () => {
   counter++;
 });
 
-upgradeA.button.addEventListener("click", () => {
-  if (counter >= upgradeA.cost) {
-    if (!upgradeA.purchased) upgradeA.purchased = true;
-    else upgradeA.rate += upgradeA.rate;
-    counter -= upgradeA.cost;
-    upgradeA.cost *= 1.1;
-    upgradeA.quantity++;
-  }
-});
+upgrades.forEach((upgrade) => {
+  rate = 0;
+  upgrade.button.addEventListener("click", () => {
+    if (counter >= upgrade.cost) {
+      if (!upgrade.purchased) upgrade.purchased = true;
+      rate += upgrade.rate;
 
-upgradeB.button.addEventListener("click", () => {
-  if (counter >= upgradeB.cost) {
-    if (!upgradeB.purchased) upgradeB.purchased = true;
-    else upgradeB.rate += upgradeB.rate;
-    counter -= upgradeB.cost;
-    upgradeB.cost *= 1.25;
-    upgradeB.quantity++;
-  }
-});
-
-upgradeC.button.addEventListener("click", () => {
-  if (counter >= upgradeC.cost) {
-    if (!upgradeC.purchased) upgradeC.purchased = true;
-    else upgradeC.rate += upgradeC.rate;
-    counter -= upgradeC.cost;
-    upgradeC.cost *= 1.5;
-    upgradeC.quantity++;
-  }
+      upgrade.rate += upgrade.rate;
+      counter -= upgrade.cost;
+      upgrade.cost *= upgrade.quantity >= 10
+        ? (upgrade.quantity >= 25 ? 1.75 : 1.5)
+        : 1.25;
+      upgrade.quantity++;
+    }
+  });
 });
 
 // game loop
