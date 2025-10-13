@@ -17,9 +17,9 @@ document.body.innerHTML = `
     <h1 style="grid-area: box-1">
       🐟 GONE FISHING! 🐟
     </h1>
-    <p style="grid-area: box-2">
+    <h2 style="grid-area: box-2">
       Total: $<span id="counter">0</span> ($<span id="rate">0</span>/sec)
-    </p>
+    </h2>
     <button id="increment" class="clicker" style="grid-area: box-3">
       <img src="${fishingRod}">
     </button>
@@ -46,7 +46,7 @@ document.body.style.backgroundColor = "#0256a6";
 const upgradeA: Upgrade = {
   icon: "🎣",
   text: "Super Rod",
-  flavor: "",
+  flavor: '"Upgrade your trusty rod!"',
   button: document.getElementById("rod-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
@@ -56,7 +56,7 @@ const upgradeA: Upgrade = {
 const upgradeB: Upgrade = {
   icon: "🪱",
   text: "Fish Bait",
-  flavor: "",
+  flavor: '"Bait so good all the fish want them!"',
   button: document.getElementById("bait-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
@@ -66,7 +66,7 @@ const upgradeB: Upgrade = {
 const upgradeC: Upgrade = {
   icon: "🕸️",
   text: "Fishing Net",
-  flavor: "",
+  flavor: '"Why catch one when you can catch multiple?"',
   button: document.getElementById("net-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
@@ -76,21 +76,21 @@ const upgradeC: Upgrade = {
 const upgradeD: Upgrade = {
   icon: "🧍",
   text: "Fisherman Fran",
-  flavor: "",
+  flavor: '"You can always put your trust into Fran"',
   button: document.getElementById("fran-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
-  cost: 1000,
+  cost: 10000,
   rate: 100,
 };
 const upgradeE: Upgrade = {
   icon: "⚓",
   text: "Better Ship",
-  flavor: "",
+  flavor: '"Travel the ocean and seas!"',
   button: document.getElementById("ship-upgrade")! as HTMLButtonElement,
   purchased: false,
   quantity: 0,
-  cost: 10000,
+  cost: 25000,
   rate: 500,
 };
 
@@ -167,7 +167,7 @@ function updateAssets() {
       : "#ffffff42";
     upgrade.button.innerHTML = upgrade.icon + upgrade.text + " x" +
       upgrade.quantity + "<br>[ $" + upgrade.cost.toFixed(2) + " ~ $" +
-      upgrade.rate.toFixed(2) + "/sec ]";
+      upgrade.rate.toFixed(2) + "/sec ]<br><br>" + upgrade.flavor;
   });
 
   counterElement.innerHTML = counter.toFixed(2);
