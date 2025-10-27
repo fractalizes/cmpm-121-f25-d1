@@ -111,9 +111,9 @@ let rate: number = 0;
 const buttonMin: number = 1;
 const buttonMax: number = 1.25;
 const buttonCooldown: number = 500;
-let buttonTimer: number = 0;
-let buttonSize: number = buttonMin;
-let buttonVector: number = 0.0025;
+let timeSinceLastAnimation: number = 0;
+let currentButtonScale: number = buttonMin;
+let buttonScaleRate: number = 0.0025;
 
 // dom elements
 const button = document.getElementById("increment")!;
@@ -150,15 +150,15 @@ function calculateTime() {
 }
 
 function animateClicker() {
-  if (buttonTimer >= buttonCooldown) {
-    if (buttonSize > buttonMax || buttonSize < buttonMin) {
-      buttonVector = -buttonVector;
+  if (timeSinceLastAnimation >= buttonCooldown) {
+    if (currentButtonScale > buttonMax || currentButtonScale < buttonMin) {
+      buttonScaleRate = -buttonScaleRate;
     }
-    buttonSize = buttonSize + buttonVector;
-    button.style.transform = "scale(" + buttonSize.toString() + ")";
-    buttonTimer = 0;
+    currentButtonScale = currentButtonScale + buttonScaleRate;
+    button.style.transform = "scale(" + currentButtonScale.toString() + ")";
+    timeSinceLastAnimation = 0;
   }
-  buttonTimer += timePassed;
+  timeSinceLastAnimation += timePassed;
 }
 
 function updateAssets() {
