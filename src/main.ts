@@ -42,7 +42,7 @@ document.body.innerHTML = `
 `;
 document.body.style.backgroundColor = "#0256a6";
 
-// upgrades
+// ugprade definitions
 const upgradeA: Upgrade = {
   icon: "🎣",
   text: "Super Rod",
@@ -94,7 +94,7 @@ const upgradeE: Upgrade = {
   rate: 500,
 };
 
-// variable trackers
+// game state variables
 const upgrades: Upgrade[] = [
   upgradeA,
   upgradeB,
@@ -115,11 +115,12 @@ let buttonTimer: number = 0;
 let buttonSize: number = buttonMin;
 let buttonVector: number = 0.0025;
 
-// define html elements
+// dom elements
 const button = document.getElementById("increment")!;
 const counterElement = document.getElementById("counter")!;
 const rateElement = document.getElementById("rate")!;
 
+// core functions
 function update() {
   calculateTime();
   autoCounter();
@@ -174,15 +175,14 @@ function updateAssets() {
   rateElement.innerHTML = rate.toFixed(2);
 }
 
-// #6eadff, #427bf5
-
-// button listeners
+// clicker event listener
 button.addEventListener("click", () => {
   counter++;
 });
 
 upgrades.forEach((upgrade) => {
   rate = 0;
+  // upgrade event listener
   upgrade.button.addEventListener("click", () => {
     if (counter >= upgrade.cost) {
       if (!upgrade.purchased) upgrade.purchased = true;
@@ -198,5 +198,5 @@ upgrades.forEach((upgrade) => {
   });
 });
 
-// game loop
+// game loop initialization
 update();
