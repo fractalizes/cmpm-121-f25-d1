@@ -1,4 +1,6 @@
-import fishingRod from "./fishing_rod.png"; // fishing rod asset from Google Noto Color Emoji
+import chaChingSoundUrl from "./chaching.mp3"; // chaching sound from Etsy Notification
+import errorSoundUrl from "./error.mp3"; // error sound from Microsoft Windows XP
+import fishingRodUrl from "./fishing_rod.png"; // fishing rod asset from Google Noto Color Emoji
 import "./style.css";
 
 interface Upgrade {
@@ -13,31 +15,33 @@ interface Upgrade {
 }
 
 document.body.innerHTML = `
-  <div class="upgrade-display">
+  <div class="main-display">
     <h1 style="grid-area: box-1">
-      🐟 GONE FISHING! 🐟
+      🐟 <i>GONE FISHING!</i> 🐟
     </h1>
     <h2 style="grid-area: box-2">
       Total: $<span id="counter">0</span> ($<span id="rate">0</span>/sec)
     </h2>
     <button id="increment" class="clicker" style="grid-area: box-3">
-      <img src="${fishingRod}">
+      <img src="${fishingRodUrl}">
     </button>
-    <button id="rod-upgrade" class="upgrade" style="grid-area: box-4">
-      🎣
-    </button>
-    <button id="bait-upgrade" class="upgrade" style="grid-area: box-5">
-      🪱
-    </button>
-    <button id="net-upgrade" class="upgrade" style="grid-area: box-6">
-      🕸️
-    </button>
-    <button id="fran-upgrade" class="upgrade" style="grid-area: box-7">
-      🧍
-    </button>
-    <button id="ship-upgrade" class="upgrade" style="grid-area: box-8">
-      ⚓
-    </button>
+    <div class="upgrade-display" style="grid-area: box-4">
+      <button id="rod-upgrade" class="upgrade" style="grid-area: upgrade-1">
+        🎣
+      </button>
+      <button id="bait-upgrade" class="upgrade" style="grid-area: upgrade-2">
+        🪱
+      </button>
+      <button id="net-upgrade" class="upgrade" style="grid-area: upgrade-3">
+        🕸️
+      </button>
+      <button id="fran-upgrade" class="upgrade" style="grid-area: upgrade-4">
+        🧍
+      </button>
+      <button id="ship-upgrade" class="upgrade" style="grid-area: upgrade-5">
+        ⚓
+      </button>
+    </div>
   </div>
 `;
 document.body.style.backgroundColor = "#0256a6";
@@ -86,12 +90,23 @@ function main() {
 
   function updateAssets() {
     upgrades.forEach((upgrade) => {
-      upgrade.button.style.background = counter >= upgrade.cost
-        ? "#ffffff9e"
-        : "#ffffff42";
-      upgrade.button.innerHTML = upgrade.icon + upgrade.text + " x" +
-        upgrade.quantity + "<br>[ $" + upgrade.cost.toFixed(2) + " ~ $" +
-        upgrade.rate.toFixed(2) + "/sec ]<br><br>" + upgrade.flavor;
+      if (counter >= upgrade.cost) {
+        upgrade.button.style.background = "#ffffff9e";
+        upgrade.button.disabled = false;
+        chaChingSound.currentTime = 0; // reset audio
+        chaChingSound.play();
+      } else {
+        upgrade.button.style.background = "#ffffff42";
+        upgrade.button.disabled = true;
+        errorSound.currentTime = 0; // reset audio
+        errorSound.play();
+      }
+      upgrade.button.innerHTML = `<span class="upgrade-icon">` +
+        upgrade.icon + `</span>&nbsp;&nbsp;` + upgrade.text +
+        `&nbsp;&nbsp;<span class="upgrade-counter">x` + upgrade.quantity +
+        "</span><br>[ $" +
+        upgrade.cost.toFixed(2) + ` ~ $` + upgrade.rate.toFixed(2) +
+        `/sec ]<br><br>` + upgrade.flavor;
     });
 
     counterElement.innerHTML = counter.toFixed(2);
@@ -175,6 +190,11 @@ function main() {
   const button = document.getElementById("increment")!;
   const counterElement = document.getElementById("counter")!;
   const rateElement = document.getElementById("rate")!;
+
+  // sound effects (thank you to this repo for the sfx inspiration!)
+  // https://github.com/mlau16/cmpm-121-f25-d1/blob/main/src/main.ts
+  const errorSound = new Audio(errorSoundUrl);
+  const chaChingSound = new Audio(chaChingSoundUrl);
 
   // clicker event listener
   button.addEventListener("click", () => {

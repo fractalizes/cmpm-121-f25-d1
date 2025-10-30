@@ -1,48 +1,85 @@
 h1 {
-  font-size: 90px;
+  font-size: 80px;
   text-align: center;
   color: #ffffff;
   filter: drop-shadow(10px 10px 5px #223651);
 }
 
 h2 {
-  font-size: 50px;
+  font-size: 45px;
   text-align: center;
   color: #ffffff;
   filter: drop-shadow(10px 10px 5px #223651);
 }
 
-.upgrade-display {
-  gap: 0.5rem;
+.main-display {
   min-height: 800px;
   min-width: 1000px;
   display: grid;
   grid-auto-rows: 200px;
   grid-template-areas:
-    "box-1 box-1 box-1 box-4 box-4 box-4 box-4"
-    "box-2 box-2 box-2 box-5 box-5 box-5 box-5"
-    "box-3 box-3 box-3 box-6 box-6 box-6 box-6"
-    "box-3 box-3 box-3 box-7 box-7 box-7 box-7"
-    "box-3 box-3 box-3 box-8 box-8 box-8 box-8";
+    "box-1 box-1 box-1 box-4 box-4"
+    "box-2 box-2 box-2 box-4 box-4"
+    "box-3 box-3 box-3 box-4 box-4"
+    "box-3 box-3 box-3 box-4 box-4"
+    "box-3 box-3 box-3 box-4 box-4";
 }
 
-.upgrade-display > .upgrade {
-  border: 1px solid #a7dfff;
-  border-width: 3px;
-  border-radius: 6px;
-  padding: 1rem;
-  color: #ffffff;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.upgrade-display > .clicker {
+.main-display > .clicker {
   background: none;
   vertical-align: top;
   border: none;
   outline: none;
   cursor: pointer;
   filter: drop-shadow(15px 10px 5px #223651);
+}
+
+.upgrade-display {
+  display: grid;
+  grid-template-areas:
+    "upgrade-1"
+    "upgrade-2"
+    "upgrade-3"
+    "upgrade-4"
+    "upgrade-5";
+}
+
+.upgrade-display > .upgrade {
+  background-color: #0256a6;
+  border: 1px solid #a7dfff;
+  border-width: 3px;
+  border-radius: 6px;
+  padding: 1rem;
+  color: #ffffff;
+  font-size: 30px;
+}
+
+/* thank you for the cursor enabling/disabling and the highlighting span inspiration! 
+https://github.com/kaitlyn-png/cmpm-121-f25-d1/blob/main/src/style.css */
+.upgrade:hover {
+  cursor: pointer;
+}
+
+.upgrade:disabled {
+  cursor: not-allowed;
+}
+
+.upgrade > .upgrade-icon {
+  font-size: 36px;
+  margin-left: auto;
+  background: #b7dcff;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.upgrade > .upgrade-counter {
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: 700;
+  margin-left: auto;
+  background: #5fb1ff;
+  border-radius: 8px;
+  padding: 2px 8px;
 }
 
 .icon {
